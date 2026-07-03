@@ -24,7 +24,7 @@ Funcionalidades:
 ## 2. Estructura de archivos
 
 ```
-gestor_b2/
+gestorarchivos_drobando/
 ├── index.php          Página principal: formulario de subida + listado
 ├── seguridad.php       Página separada con la explicación de seguridad
 ├── subir.php           Procesador de subida (POST)
@@ -49,27 +49,24 @@ gestor_b2/
 ### Requisitos
 
 - PHP 8.0 o superior
-- Extensión fileinfo habilitada (activa por defecto en la mayoría de instalaciones!)
-- Servidor web: Apache, Nginx o el servidor integrado de PHP
+- Extensión fileinfo habilitada (Activa por defecto en la mayoría de instalaciones)
+- Servidor web: Apache o el servidor integrado de PHP
 
 ### Instalación y arranque
 
-1. Clonar el repositorio con Git:
-   git clone <URL_DEL_REPOSITORIO>
-
-2. Mover la carpeta del proyecto al directorio `htdocs` de XAMPP.
+1. Clonar el repositorio con Git y mover la carpeta del proyecto al directorio `htdocs` de XAMPP.
    Ejemplo:
    C:\xampp\htdocs\gestorarchivos_drobando
 
-3. Iniciar los servicios Apache (y MySQL si el proyecto utiliza base de datos) desde el Panel de Control de XAMPP.
+2. Iniciar los servicios Apache y MySQL desde el Panel de Control de XAMPP.
 
-4. Abrir el navegador y acceder a:
+3. Abrir el navegador y acceder a:
    http://localhost/gestorarchivos_drobando/
 
 ### Subir un archivo
 
 1. Abrir index.php
-2. Seleccionar un archivo PDF, JPG o PNG de hasta 3 MB
+2. Seleccionar un archivo PDF, JPG o PNG de máximo 3 MB
 3. Pulsar "Subir archivo"
 4. El sistema muestra un mensaje de éxito y sugiere renombrarlo si se desea
 
