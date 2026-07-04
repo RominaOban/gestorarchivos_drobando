@@ -306,7 +306,7 @@ class GestorArchivos
             return $this->respuesta(false, 'El archivo no existe en el servidor.');
         }
 
-        // 3. Sanitizar el alias: solo alfanuméricos, guiones, guiones bajos y punto
+// 3. Sanitizar el alias: solo alfanuméricos, guiones, guiones bajos y punto
         $aliasSanitizado = preg_replace('/[^a-zA-Z0-9._\- ]/', '', $aliasNuevo);
         $aliasSanitizado = trim($aliasSanitizado);
 
@@ -316,6 +316,15 @@ class GestorArchivos
 
         if (strlen($aliasSanitizado) > 100) {
             return $this->respuesta(false, 'El nombre no puede superar los 100 caracteres.');
+        }
+
+        // 3.5 Garantizar que el alias conserva la extensión del archivo real.
+        // Si el usuario escribe "prueba" sin extensión, se agrega ".pdf" automáticamente
+        // para que la descarga funcione correctamente como prueba.pdf
+        $extReal  = strtolower(pathinfo($nombreLimpio, PATHINFO_EXTENSION));
+        $extAlias = strtolower(pathinfo($aliasSanitizado, PATHINFO_EXTENSION));
+        if ($extAlias !== $extReal) {
+            $aliasSanitizado = $aliasSanitizado . '.' . $extReal;
         }
 
         // 4. Guardar el alias en sesión: [nombre_en_disco => alias_visible]
@@ -351,8 +360,17 @@ class GestorArchivos
             exit('Archivo no encontrado.');
         }
 
-        // Usar el alias si existe, si no el nombre en disco
-        $nombreDescarga = $_SESSION['alias_archivos'][$nombreLimpio] ?? $nombreLimpio;
+        // Toma el alias si existe, pero garantiza que tenga la extensión correcta
+        $alias     = $_SESSION['alias_archivos'][$nombreLimpio] ?? $nombreLimpio;
+        $extReal   = pathinfo($nombreLimpio, PATHINFO_EXTENSION); // extensión del archivo en disco
+        $extAlias  = pathinfo($alias, PATHINFO_EXTENSION);        // extensión del alias
+
+        // Si el alias no tiene extensión, se le agrega la del archivo real
+        if (strtolower($extAlias) !== strtolower($extReal)) {
+            $alias = $alias . '.' . $extReal;
+        }
+
+        $nombreDescarga = $alias;
 
         // Cabeceras de descarga segura
         header('Content-Description: File Transfer');
