@@ -34,7 +34,7 @@ header('X-Frame-Options: DENY');                      // Impide que la página s
 header('X-Content-Type-Options: nosniff');          // Impide que el navegador reinterprete el tipo MIME
 header('X-XSS-Protection: 1; mode=block');
 header('Referrer-Policy: strict-origin-when-cross-origin');
-header("Content-Security-Policy: default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline';");
+header("Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; script-src 'self' 'unsafe-inline';");
 
 // Generar token CSRF si no existe en la sesión actual
 // random_bytes(32) produce 32 bytes impredecibles; bin2hex los convierte en 64 caracteres hex
